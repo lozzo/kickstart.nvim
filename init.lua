@@ -997,23 +997,24 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     build = ':TSUpdate',
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = {
-          'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
-          'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
-          'python', 'typescript', 'javascript', 'tsx', 'json', 'css',
-        },
-        auto_install = true,
-        highlight = {
-          enable = true,
-        },
-        indent = {
-          enable = true,
-        },
+      -- Install parsers
+      local languages = {
+        'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
+        'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
+        'python', 'typescript', 'javascript', 'tsx', 'json', 'css',
       }
+      require('nvim-treesitter').install(languages)
+
+      -- Enable treesitter-based highlighting and indentation
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function()
+          pcall(vim.treesitter.start)
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
     end,
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
