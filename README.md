@@ -1,27 +1,107 @@
-# kickstart.nvim
+# Neovim Configuration
 
-## Introduction
+Personal Neovim configuration based on kickstart.nvim with LSP, autocompletion, and modern plugins.
 
-A starting point for Neovim that is:
+## Features
 
-* Small
-* Single-file
-* Completely Documented
+- LSP support (Python, TypeScript/JavaScript, Lua)
+- Auto-completion with blink.cmp
+- Fuzzy finder with Telescope
+- File explorer with Neo-tree
+- Git integration with gitsigns
+- Auto-formatting on save
+- Tokyo Night (Carbonfox) theme
+- Nerd Font icons
 
-**NOT** a Neovim distribution, but instead a starting point for your configuration.
+## Quick Install
 
-## Installation
+### macOS
 
-### Install Neovim
+```bash
+# Install dependencies
+brew install neovim git ripgrep fd make gcc node python3
 
-Kickstart.nvim targets *only* the latest
-['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest
-['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim.
-If you are experiencing issues, please make sure you have the latest versions.
+# Install Nerd Font (optional but recommended)
+brew install --cask font-jetbrains-mono-nerd-font
 
-### Install External Dependencies
+# Clone configuration
+git clone https://github.com/lozzo/kickstart.nvim.git ~/.config/nvim
 
-External Requirements:
+# Start neovim (plugins will auto-install)
+nvim
+```
+
+### Ubuntu/Debian
+
+```bash
+# Install Neovim (latest version)
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo apt update
+sudo apt install neovim
+
+# Install dependencies
+sudo apt install git ripgrep fd-find make gcc unzip curl xclip
+
+# Install Node.js (for TypeScript LSP)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install nodejs
+
+# Install Python3
+sudo apt install python3 python3-pip python3-venv
+
+# Clone configuration
+git clone https://github.com/lozzo/kickstart.nvim.git ~/.config/nvim
+
+# Start neovim (plugins will auto-install)
+nvim
+```
+
+## Post Installation
+
+1. Open Neovim: `nvim`
+2. Wait for plugins to install automatically (via lazy.nvim)
+3. Run `:Mason` to check/install LSP servers and formatters
+4. Run `:checkhealth` to verify everything is working
+
+## Included LSP Servers
+
+These are auto-installed via Mason:
+
+| Server | Language |
+|--------|----------|
+| pyright | Python |
+| ts_ls | TypeScript/JavaScript |
+| lua_ls | Lua |
+
+## Included Formatters
+
+| Formatter | Language |
+|-----------|----------|
+| stylua | Lua |
+| prettier | JS/TS/HTML/CSS/JSON |
+| black | Python |
+| isort | Python imports |
+| ruff | Python linter |
+
+## Key Bindings
+
+| Key | Description |
+|-----|-------------|
+| `Space` | Leader key |
+| `Space + sf` | Search files |
+| `Space + sg` | Search by grep |
+| `Space + /` | Fuzzy search in buffer |
+| `Space + Space` | Find buffers |
+| `Ctrl + s` | Save file |
+| `grd` | Go to definition |
+| `grr` | Find references |
+| `grn` | Rename symbol |
+
+---
+
+## Original kickstart.nvim Documentation
+
+### External Requirements
 - Basic utils: `git`, `make`, `unzip`, C Compiler (`gcc`)
 - [ripgrep](https://github.com/BurntSushi/ripgrep#installation),
   [fd-find](https://github.com/sharkdp/fd#installation)
